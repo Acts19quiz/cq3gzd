@@ -181,6 +181,11 @@ public:
 		
 	static float GetZNear() { return 5.f; }
 	static float GetZFar() { return 65536.f; }
+
+	//void DrawFireTexture(FTexture *img, DCanvas::DrawParms &parms);//[GEC]
+	void DrawFireTexture(FTexture *img, DrawParms &parms);// Above changed from [GEC] to convert from g1.9.1 to g3.6.0 spec.--Acts 19 quiz
+	void R_InitFirePSX_(void);//[GEC]
+	void R_FirePSXTicker_(bool fireout);//[GEC]
 };
 
 #include "hwrenderer/scene/hw_fakeflat.h"

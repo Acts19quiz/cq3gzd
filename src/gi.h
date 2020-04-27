@@ -49,6 +49,7 @@
 #define GI_NOTEXTCOLOR			0x00000100	// Chex Quest 3 would have everything green
 
 #include "gametype.h"
+#include "doomdef.h"//[GEC]
 
 extern const char *GameNames[17];
 
@@ -191,6 +192,14 @@ struct gameinfo_t
 	FName statusscreen_single;
 	FName statusscreen_coop;
 	FName statusscreen_dm;
+	gamestate_t	mStartWipe; //[GEC]
+	gamestate_t	mMapWipe; //[GEC]
+	float scalefriction; //[GEC]
+	int playeranglemode; //[GEC]
+	int playerblendsystem; //[GEC]
+	FString mBackImage;//[GEC]
+	int  mBackResW;//[GEC]
+	int  mBackResH;//[GEC]
 
 	const char *GetFinalePage(unsigned int num) const;
 };

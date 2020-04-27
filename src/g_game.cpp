@@ -60,6 +60,7 @@
 #include "g_game.h"
 #include "sbar.h"
 #include "m_png.h"
+#include "gi.h"//[GEC]
 #include "a_keys.h"
 #include "cmdlib.h"
 #include "d_net.h"
@@ -78,6 +79,11 @@
 #include "g_levellocals.h"
 #include "events.h"
 
+#include "pagedefs.h"//[GEC]
+extern bool DrawCustomPage; //[GEC]
+extern int SkipPage; //[GEC]
+extern bool ForceSkipPage; //[GEC]
+extern bool NoMenu; //[GEC]
 
 static FRandom pr_dmspawn ("DMSpawn");
 static FRandom pr_pspawn ("PlayerSpawn");
@@ -131,6 +137,7 @@ CVAR(Int, nametagcolor, CR_GOLD, CVAR_ARCHIVE)
 gameaction_t	gameaction;
 gamestate_t 	gamestate = GS_STARTUP;
 FName			SelectedSlideshow;		// what to start when ga_slideshow
+bool WipeDone = false;//[GEC]
 
 int 			paused;
 bool			pauseext;
@@ -1033,6 +1040,9 @@ void G_Ticker ()
 			}
 			if (players[i].playerstate == PST_REBORN || players[i].playerstate == PST_ENTER)
 			{
+				if(gameinfo.mMapWipe != GS_DEMOSCREEN)//[GEC]
+				wipegamestate = gameinfo.mMapWipe;//[GEC]
+
 				G_DoReborn(i, false);
 			}
 		}
@@ -1214,7 +1224,9 @@ void G_Ticker ()
 		break;
 
 	case GS_DEMOSCREEN:
-		D_PageTicker ();
+		//D_PageTicker ();
+		if(DrawCustomPage){D_CustomPageTicker ();}//[GEC]
+		else{D_PageTicker ();}
 		break;
 
 	case GS_STARTUP:

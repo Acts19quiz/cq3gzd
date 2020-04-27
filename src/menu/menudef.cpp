@@ -1700,3 +1700,19 @@ fail:
 		}
 	}
 }
+
+//=============================================================================
+//
+// Returns the default skill level.
+//
+//=============================================================================
+
+int M_GetDefaultSkill()//Acts19quiz
+{
+	int defskill = DefaultSkill;
+	if ((unsigned int)defskill >= AllSkills.Size())
+	{
+		defskill = (AllSkills.Size() - 1) / 2;
+	}
+	return defskill;
+}

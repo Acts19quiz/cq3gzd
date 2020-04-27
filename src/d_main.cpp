@@ -102,6 +102,14 @@
 #include "types.h"
 #include "r_data/r_vanillatrans.h"
 
+#include "pagedefs.h"//[GEC]
+
+extern bool DrawCustomPage; //[GEC]
+extern bool Force_Wipe; //[GEC]
+extern bool Force_Clear; //[GEC]
+extern bool ResetCount; //[GEC]
+extern int RestarPage; //[GEC]
+
 EXTERN_CVAR(Bool, hud_althud)
 void DrawHUD();
 void D_DoAnonStats();
@@ -244,8 +252,8 @@ uint32_t r_renderercaps = 0;
 
 // PRIVATE DATA DEFINITIONS ------------------------------------------------
 
-static int demosequence;
-static int pagetic;
+int demosequence;// static int demosequence; Removal of static is actually a g3.6.0 change reverted back to 1.9.1 spec.--Acts 19 quiz
+int pagetic;// static int pagetic;
 
 // CODE --------------------------------------------------------------------
 
@@ -280,6 +288,9 @@ void D_ProcessEvents (void)
 	for (; eventtail != eventhead ; eventtail = (eventtail+1)&(MAXEVENTS-1))
 	{
 		ev = &events[eventtail];
+
+		ResetCount = true;//[GEC]
+
 		if (ev->type == EV_None)
 			continue;
 		if (ev->type == EV_DeviceChange)
@@ -313,6 +324,7 @@ void D_PostEvent (const event_t *ev)
 	events[eventhead] = *ev;
 	if (ev->type == EV_Mouse && menuactive == MENU_Off && ConsoleState != c_down && ConsoleState != c_falling && !E_Responder(ev) && !paused)
 	{
+		ResetCount = true;//[GEC]
 		if (Button_Mlook.bDown || freelook)
 		{
 			int look = int(ev->y * m_pitch * mouse_sensitivity * 16.0);
@@ -738,6 +750,10 @@ void D_Display ()
 			wipe = screen->WipeStartScreen (wipetype);
 			break;
 
+		case GS_FORCEWIPENONE: //[GEC]
+			wipe = screen->WipeStartScreen (wipe_None);
+			break;
+
 		case GS_FORCEWIPEFADE:
 			wipe = screen->WipeStartScreen (wipe_Fade);
 			break;
@@ -749,6 +765,19 @@ void D_Display ()
 		case GS_FORCEWIPEMELT:
 			wipe = screen->WipeStartScreen (wipe_Melt);
 			break;
+
+		case GS_FORCEWIPEMELT64: //[GEC]
+			wipe = screen->WipeStartScreen (wipe_Melt64);
+			break;
+
+		case GS_FORCEWIPEFADESCREEN: //[GEC]
+			wipe = screen->WipeStartScreen (wipe_FadeScreen);
+			break;
+
+		case GS_FORCEWIPELOADINGSCREEN: //[GEC]
+			wipe = screen->WipeStartScreen (wipe_LoadingScreen);
+			break;
+
 		}
 		wipegamestate = gamestate;
 	}
@@ -840,7 +869,9 @@ void D_Display ()
 				break;
 				
 			case GS_DEMOSCREEN:
-				D_PageDrawer ();
+				//[GEC]	D_PageDrawer ();
+				if(DrawCustomPage){D_CustomPageDrawer();}//[GEC]
+				else{D_PageDrawer ();}
 				break;
 				
 			default:
@@ -915,6 +946,7 @@ void D_Display ()
 
 		do
 		{
+			WipeDone = false;//[GEC]
 			do
 			{
 				I_WaitVBL(2);
@@ -929,6 +961,7 @@ void D_Display ()
 			screen->End2DAndUpdate ();
 			NetUpdate ();			// [RH] not sure this is needed anymore
 		} while (!done);
+		WipeDone = true;//[GEC]
 		screen->WipeCleanup();
 		I_FreezeTime(false);
 		GSnd->SetSfxPaused(false, 1);
@@ -1248,6 +1281,12 @@ void D_DoAdvanceDemo (void)
 		return;
 	}
 
+	if(DrawCustomPage)//[GEC]
+	{
+		D_DoCustomAdvanceDemo();//[GEC]
+		return;//[GEC]
+	}
+
 	if (gameinfo.gametype == GAME_Strife)
 	{
 		D_DoStrifeAdvanceDemo ();
@@ -1322,10 +1361,28 @@ void D_DoAdvanceDemo (void)
 //
 //==========================================================================
 
-void D_StartTitle (void)
+void D_StartTitle (bool setpage)//[GEC] void D_StartTitle (void)
 {
 	gameaction = ga_nothing;
-	demosequence = -1;
+
+	if(RestarPage != -1 && setpage)//[GEC]
+		demosequence = RestarPage;//[GEC]
+	else//[GEC]
+		demosequence = -1;
+
+	D_AdvanceDemo ();
+}
+
+//==========================================================================
+//
+// D_19StartTitle// Acts 19 quiz
+//
+//==========================================================================
+
+void D_19StartTitle (void)
+{
+	gameaction = ga_nothing;
+	demosequence = 10;
 	D_AdvanceDemo ();
 }
 
@@ -2469,6 +2526,10 @@ void D_DoomMain (void)
 		if (!batchrun) Printf ("ParseTeamInfo: Load team definitions.\n");
 		TeamLibrary.ParseTeamInfo ();
 
+		// [GEC] Parse any PAGEDEFS lumps.
+		Printf("ParsePageDefs: Load page definitions.\n");//[GEC]
+		ParsePageDefs();//[GEC]
+
 		R_ParseTrnslate();
 		PClassActor::StaticInit ();
 
@@ -2657,6 +2718,10 @@ void D_DoomMain (void)
 							if (demorecording)
 								G_BeginRecording(startmap);
 							G_InitNew(startmap, false);
+
+							if (gameinfo.mStartWipe != GS_DEMOSCREEN)//[GEC]
+								wipegamestate = gameinfo.mStartWipe;//[GEC]
+
 							if (StoredWarp.IsNotEmpty())
 							{
 								AddCommandString(StoredWarp.LockBuffer());

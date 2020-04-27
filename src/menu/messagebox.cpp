@@ -136,7 +136,7 @@ void ActivateEndGameMenu()
 		if (!netgame)
 		{
 			G_CheckDemoStatus();
-			D_StartTitle();
+			D_StartTitle(true);//[GEC]
 		}
 	});
 

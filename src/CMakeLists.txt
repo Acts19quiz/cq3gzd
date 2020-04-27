@@ -989,6 +989,7 @@ set (PCH_SOURCES
 	p_usdf.cpp
 	p_user.cpp
 	p_xlat.cpp
+	pagedefs.cpp
 	parsecontext.cpp
 	po_man.cpp
 	portal.cpp

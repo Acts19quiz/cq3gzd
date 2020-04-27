@@ -1015,7 +1015,7 @@ void R_InitSprites ()
 	{
 		auto basetype = ((APlayerPawn*)GetDefaultByType(PlayerClasses[i].Type));
 
-		Skins[i].Name = "Base";
+		Skins[i].Name = "Rice Chex(TM)";// Acts 19 quiz
 		if (basetype->Face == NAME_None)
 		{
 			Skins[i].Face = "STF";

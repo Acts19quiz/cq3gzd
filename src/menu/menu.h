@@ -149,6 +149,8 @@ public:
 	EColorRange mFontColor;
 	EColorRange mFontColor2;
 	bool mCenter;
+	bool mNoDim;//[GEC]
+	int mResW, mResH;//[GEC] Resolucion de la imagen
 
 	void Reset()
 	{
@@ -164,6 +166,10 @@ public:
 		mFont = NULL;
 		mFontColor = CR_UNTRANSLATED;
 		mFontColor2 = CR_UNTRANSLATED;
+		mNoDim = false;//[GEC]
+		mResW = 0;//[GEC]
+		mResH = 0;//[GEC]
+
 	}
 	
 	size_t PropagateMark() override;
@@ -269,7 +275,10 @@ public:
 
 	DMenu(DMenu *parent = NULL);
 	bool TranslateKeyboardEvents();
-	virtual void Close();
+	virtual bool DimAllowed ();//[GEC]
+	virtual void Close(bool noalpha = false);//[GEC] virtual void Close();
+	virtual bool BackImage();//[GEC]
+	void ReleaseCapture();//[GEC]
 
 	bool CallResponder(event_t *ev);
 	bool CallMenuEvent(int mkey, bool fromcontroller);
@@ -335,10 +344,12 @@ void M_Ticker (void);
 void M_Drawer (void);
 void M_Init (void);
 void M_CreateMenus();
-void M_ActivateMenu(DMenu *menu);
+//void M_ActivateMenu(DMenu *menu);
+void M_ActivateMenu(DMenu *menu, bool noalpha = false);//[GEC]
 void M_ClearMenus ();
 void M_ParseMenuDefs();
 void M_StartupSkillMenu(FGameStartup *gs);
+int M_GetDefaultSkill();//[GEC]
 void M_StartControlPanel (bool makeSound);
 void M_SetMenu(FName menu, int param = -1);
 void M_StartMessage(const char *message, int messagemode, FName action = NAME_None);

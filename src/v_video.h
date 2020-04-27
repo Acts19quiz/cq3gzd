@@ -201,6 +201,10 @@ enum
 	DTA_SrcHeight,
 	DTA_LegacyRenderStyle,	// takes an old-style STYLE_* constant instead of an FRenderStyle
 
+	DTA_ResWidthF,		// [GEC]
+	DTA_ResHeightF,		// [GEC]
+	DTA_GLCOLOR,		// [GEC] color
+	DTA_DrawFire,		// [GEC] draw fire
 };
 
 enum
