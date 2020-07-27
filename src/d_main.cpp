@@ -2098,13 +2098,13 @@ static void AddAutoloadFiles(const char *autoname)
 	{
 		if (autoloadlights)
 		{
-			const char *lightswad = BaseFileSearch ("lights.pk3", NULL);
+			const char *lightswad = BaseFileSearch ("CQ3gldef.pk3", NULL);//Acts 19 quiz
 			if (lightswad)
 				D_AddFile (allwads, lightswad);
 		}
 		if (autoloadbrightmaps)
 		{
-			const char *bmwad = BaseFileSearch ("brightmaps.pk3", NULL);
+			const char *bmwad = BaseFileSearch ("CQsmk.pk3", NULL);//Acts 19 quiz
 			if (bmwad)
 				D_AddFile (allwads, bmwad);
 		}

@@ -653,7 +653,7 @@ int FIWadManager::IdentifyVersion (TArray<FString> &wadfiles, const char *iwad, 
 	// If we still haven't found a suitable IWAD let's error out.
 	if (picks.Size() == 0)
 	{
-		I_FatalError ("Cannot find a game IWAD (doom.wad, doom2.wad, heretic.wad, etc.).\n"
+		I_FatalError ("Cannot find a game IWAD (chex.wad, chex3.wad, chex3gzd.ipk3, etc.).\n"// Acts 19 quiz
 					  "Did you install " GAMENAME " properly? You can do either of the following:\n"
 					  "\n"
 #if defined(_WIN32)
@@ -673,7 +673,7 @@ int FIWadManager::IdentifyVersion (TArray<FString> &wadfiles, const char *iwad, 
 	int pick = 0;
 
 	// We got more than one so present the IWAD selection box.
-	if (picks.Size() > 1)
+	if (picks.Size() > 0)// Acts 19 quiz
 	{
 		// Locate the user's prefered IWAD, if it was found.
 		if (defaultiwad[0] != '\0')
@@ -688,7 +688,7 @@ int FIWadManager::IdentifyVersion (TArray<FString> &wadfiles, const char *iwad, 
 				}
 			}
 		}
-		if (picks.Size() > 1)
+		if (picks.Size() > 0)// Acts 19 quiz
 		{
 			if (!havepicked)
 			{
