@@ -2104,9 +2104,15 @@ static void AddAutoloadFiles(const char *autoname)
 		}
 		if (autoloadbrightmaps)
 		{
-			const char *bmwad = BaseFileSearch ("CQsmk.pk3", NULL);//Acts 19 quiz
+			const char *bmwad = BaseFileSearch ("CQmpg.pk3", NULL);//Acts 19 quiz
 			if (bmwad)
 				D_AddFile (allwads, bmwad);
+			else//Acts 19 quiz
+			{
+				const char *smwad = BaseFileSearch("CQsmk.pk3", NULL);//Acts 19 quiz
+				if (smwad)
+					D_AddFile (allwads, smwad);
+			}
 		}
 	}
 
