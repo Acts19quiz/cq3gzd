@@ -213,11 +213,7 @@ CUSTOM_CVAR (String, vid_cursor, "None", CVAR_ARCHIVE | CVAR_NOINITCALL)
 
 // Controlled by startup dialog
 CVAR (Bool, disableautoload, false, CVAR_ARCHIVE | CVAR_NOINITCALL | CVAR_GLOBALCONFIG)
-#ifdef __unix__
-CVAR (Bool, autoloadbrightmaps, true, CVAR_ARCHIVE | CVAR_NOINITCALL | CVAR_GLOBALCONFIG)
-#else
 CVAR (Bool, autoloadbrightmaps, false, CVAR_ARCHIVE | CVAR_NOINITCALL | CVAR_GLOBALCONFIG)
-#endif
 CVAR (Bool, autoloadlights, false, CVAR_ARCHIVE | CVAR_NOINITCALL | CVAR_GLOBALCONFIG)
 CVAR (Bool, r_debug_disable_vis_filter, false, 0)
 
@@ -2106,6 +2102,17 @@ static void AddAutoloadFiles(const char *autoname)
 			if (lightswad)
 				D_AddFile (allwads, lightswad);
 		}
+#ifdef __unix__
+		const char *bmwad = BaseFileSearch("CQmpg.pk3", NULL);//Acts 19 quiz
+		if (bmwad)
+			D_AddFile(allwads, bmwad);
+		else//Acts 19 quiz
+		{
+			const char *smwad = BaseFileSearch("CQsmk.pk3", NULL);//Acts 19 quiz
+			if (smwad)
+				D_AddFile(allwads, smwad);
+		}
+#else
 		if (autoloadbrightmaps)
 		{
 			const char *bmwad = BaseFileSearch ("CQmpg.pk3", NULL);//Acts 19 quiz
@@ -2118,8 +2125,8 @@ static void AddAutoloadFiles(const char *autoname)
 					D_AddFile (allwads, smwad);
 			}
 		}
+#endif
 	}
-
 	if (!(gameinfo.flags & GI_SHAREWARE) && !Args->CheckParm("-noautoload") && !disableautoload)
 	{
 		FString file;
