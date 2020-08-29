@@ -2098,34 +2098,34 @@ static void AddAutoloadFiles(const char *autoname)
 	{
 		if (autoloadlights)
 		{
-			const char *lightswad = BaseFileSearch ("CQ3gldef.pk3", NULL);//Acts 19 quiz
+			const char *lightswad = BaseFileSearch ("CQ3gldef.pk3", NULL);// Acts 19 quiz
 			if (lightswad)
 				D_AddFile (allwads, lightswad);
 		}
-#ifdef __unix__
-		const char *bmwad = BaseFileSearch("CQmpg.pk3", NULL);//Acts 19 quiz
+#ifdef __unix__// Acts 19 quiz
+		const char *bmwad = BaseFileSearch("CQmpg.pk3", NULL);// Acts 19 quiz
 		if (bmwad)
 			D_AddFile(allwads, bmwad);
-		else//Acts 19 quiz
+		else// Acts 19 quiz
 		{
-			const char *smwad = BaseFileSearch("CQsmk.pk3", NULL);//Acts 19 quiz
+			const char *smwad = BaseFileSearch("CQsmk.pk3", NULL);// Acts 19 quiz
 			if (smwad)
 				D_AddFile(allwads, smwad);
 		}
 #else
 		if (autoloadbrightmaps)
 		{
-			const char *bmwad = BaseFileSearch ("CQmpg.pk3", NULL);//Acts 19 quiz
+			const char *bmwad = BaseFileSearch ("CQmpg.pk3", NULL);// Acts 19 quiz
 			if (bmwad)
 				D_AddFile (allwads, bmwad);
-			else//Acts 19 quiz
+			else// Acts 19 quiz
 			{
-				const char *smwad = BaseFileSearch("CQsmk.pk3", NULL);//Acts 19 quiz
+				const char *smwad = BaseFileSearch("CQsmk.pk3", NULL);// Acts 19 quiz
 				if (smwad)
 					D_AddFile (allwads, smwad);
 			}
 		}
-#endif
+#endif// Acts 19 quiz
 	}
 	if (!(gameinfo.flags & GI_SHAREWARE) && !Args->CheckParm("-noautoload") && !disableautoload)
 	{
