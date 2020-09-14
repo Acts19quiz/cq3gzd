@@ -24,5 +24,5 @@ To build Chex 3 GZD, please see the [ZDoom wiki](https://zdoom.org/wiki/) and se
 
 ## Trademark information
 
-Chex&#8482; and Chex Quest&#8482; are trademarks of General Mills, Inc. Chex Quest 3 cannot be bought or sold under any circumstances unless under authority of General Mills, Inc.
+Chex&#8482; and Chex Quest&#8482; are trademarks of General Mills, Inc. Chex Quest 3 cannot be bought or sold under any circumstances.
 
