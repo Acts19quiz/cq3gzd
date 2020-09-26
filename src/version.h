@@ -88,6 +88,7 @@ const char *GetVersionString();
 // This is so that derivates can use the same savegame versions without worrying about engine compatibility
 #define GAMESIG "CQ3"// Acts 19 quiz (used in the start-up header)
 #define BASEWAD "gzdoom.pk3"
+#define HELPWAD "CQ3help.pk3"// Acts 19 quiz
 #define OPTIONALWAD "zd_extra.pk3"
 
 // More stuff that needs to be different for derivatives.

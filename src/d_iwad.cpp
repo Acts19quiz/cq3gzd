@@ -509,7 +509,7 @@ void FIWadManager::ValidateIWADs()
 
 static bool havepicked = false;
 
-int FIWadManager::IdentifyVersion (TArray<FString> &wadfiles, const char *iwad, const char *zdoom_wad, const char *optional_wad)
+int FIWadManager::IdentifyVersion (TArray<FString> &wadfiles, const char *iwad, const char *zdoom_wad, const char *optional_wad, const char *help_wad)// Acts 19 quiz
 {
 	const char *iwadparm = Args->CheckValue ("-iwad");
 	FString custwad;
@@ -732,6 +732,7 @@ int FIWadManager::IdentifyVersion (TArray<FString> &wadfiles, const char *iwad, 
 	D_AddFile (wadfiles, picks[pick].mFullPath);
 
 	auto info = mIWadInfos[picks[pick].mInfoIndex];
+	D_AddFile(wadfiles, help_wad);// Acts 19 quiz
 	// Load additional resources from the same directory as the IWAD itself.
 	for (unsigned i=0; i < info.Load.Size(); i++)
 	{
@@ -760,9 +761,9 @@ int FIWadManager::IdentifyVersion (TArray<FString> &wadfiles, const char *iwad, 
 //
 //==========================================================================
 
-const FIWADInfo *FIWadManager::FindIWAD(TArray<FString> &wadfiles, const char *iwad, const char *basewad, const char *optionalwad)
+const FIWADInfo *FIWadManager::FindIWAD(TArray<FString> &wadfiles, const char *iwad, const char *basewad, const char *optionalwad, const char *helpwad)// Acts 19 quiz
 {
-	int iwadType = IdentifyVersion(wadfiles, iwad, basewad, optionalwad);
+	int iwadType = IdentifyVersion(wadfiles, iwad, basewad, optionalwad, helpwad);// Acts 19 quiz
 	//gameiwad = iwadType;
 	const FIWADInfo *iwad_info = &mIWadInfos[iwadType];
 	if (DoomStartupInfo.Name.IsEmpty()) DoomStartupInfo.Name = iwad_info->Name;
