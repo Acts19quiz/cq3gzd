@@ -1187,7 +1187,7 @@ FUNC(LS_Teleport_EndGame)
 		if (!netgame)// Acts 19 quiz
 		{
 			G_CheckDemoStatus();
-			D_19StartTitle();
+			D_19StartTitle(true);
 			return true;
 		}
 		G_ChangeLevel(NULL, 0, 0);

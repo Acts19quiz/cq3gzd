@@ -58,7 +58,7 @@ void D_PageTicker (void);
 void D_PageDrawer (void);
 void D_AdvanceDemo (void);
 void D_StartTitle (bool setpage = false);//[GEC] void D_StartTitle (void);
-void D_19StartTitle (void);// Acts 19 quiz
+void D_19StartTitle (bool setpage = false);// Acts 19 quiz
 bool D_AddFile (TArray<FString> &wadfiles, const char *file, bool check = true, int position = -1);
 
 

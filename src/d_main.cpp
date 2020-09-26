@@ -1380,10 +1380,15 @@ void D_StartTitle (bool setpage)//[GEC] void D_StartTitle (void)
 //
 //==========================================================================
 
-void D_19StartTitle (void)
+void D_19StartTitle (bool setpage)
 {
 	gameaction = ga_nothing;
-	demosequence = EndPage;
+
+	if(EndPage != -1 && setpage)//[GEC]
+		demosequence = EndPage;//[GEC]
+	else//[GEC]
+		demosequence = -1;
+
 	D_AdvanceDemo ();
 }
 
