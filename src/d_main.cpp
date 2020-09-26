@@ -109,6 +109,7 @@ extern bool Force_Wipe; //[GEC]
 extern bool Force_Clear; //[GEC]
 extern bool ResetCount; //[GEC]
 extern int RestarPage; //[GEC]
+extern int EndPage;// Acts 19 quiz
 
 EXTERN_CVAR(Bool, hud_althud)
 void DrawHUD();
@@ -1382,7 +1383,7 @@ void D_StartTitle (bool setpage)//[GEC] void D_StartTitle (void)
 void D_19StartTitle (void)
 {
 	gameaction = ga_nothing;
-	demosequence = 10;
+	demosequence = EndPage;
 	D_AdvanceDemo ();
 }
 

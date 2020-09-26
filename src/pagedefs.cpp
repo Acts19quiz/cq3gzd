@@ -82,6 +82,7 @@ bool NoMenu = false; //[GEC]
 bool DrawMenu = false; //[GEC]
 bool ResetCount = false; //[GEC]
 int RestarPage = -1; //[GEC]
+int EndPage = -1;// Acts 19 quiz
 
 extern int demosequence;
 extern int pagetic;
@@ -230,6 +231,10 @@ void ParsePageDefs()
 						else if (sc.CheckString("setrestarpage"))
 						{
 							RestarPage = Pag->PageNum;//setrestarpage
+						}
+						else if (sc.CheckString("setendpage"))// Acts 19 quiz
+						{
+							EndPage = Pag->PageNum;//setendpage
 						}
 						else if (sc.CheckString("resetanimations"))
 						{
