@@ -253,7 +253,7 @@ uint32_t r_renderercaps = 0;
 
 // PRIVATE DATA DEFINITIONS ------------------------------------------------
 
-int demosequence;// static int demosequence; Removal of static is actually a g3.6.0 change reverted back to 1.9.1 spec.--Acts 19 quiz
+int demosequence;// static int demosequence; Removal of static is a [GEC] change.--Acts 19 quiz
 int pagetic;// static int pagetic;
 
 // CODE --------------------------------------------------------------------
