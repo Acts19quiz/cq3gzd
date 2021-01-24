@@ -20,7 +20,7 @@ Special thanks to Coraline of the 3DGE team for allowing use of her README.md as
 
 ## How to build Chex 3 GZD
 
-To build Chex 3 GZD, please see the [ZDoom wiki](https://zdoom.org/wiki/) and see the "Programmer's Corner" on the bottom-right corner of the page to build for your platform. Bear in mind 64-bit builds of Chex 3 GZD aren't currently supported.
+To build Chex 3 GZD, please see the [ZDoom wiki](https://zdoom.org/wiki/) and see the "Programmer's Corner" on the bottom-right corner of the page to build for your platform. Bear in mind, 64-bit builds of Chex 3 GZD aren't currently supported.
 
 ## Trademark information
 
