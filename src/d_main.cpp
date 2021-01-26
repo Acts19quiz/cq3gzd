@@ -105,6 +105,15 @@
 #include "s_music.h"
 #include "swrenderer/r_swcolormaps.h"
 
+#include "pagedefs.h"//[GEC]
+
+extern bool DrawCustomPage; //[GEC]
+extern bool Force_Wipe; //[GEC]
+extern bool Force_Clear; //[GEC]
+extern bool ResetCount; //[GEC]
+extern int RestarPage; //[GEC]
+extern int EndPage;// Acts 19 quiz
+
 EXTERN_CVAR(Bool, hud_althud)
 EXTERN_CVAR(Bool, cl_customizeinvulmap)
 void DrawHUD();
@@ -267,8 +276,8 @@ uint32_t r_renderercaps = 0;
 
 // PRIVATE DATA DEFINITIONS ------------------------------------------------
 
-static int demosequence;
-static int pagetic;
+int demosequence;// static int demosequence; Removal of static is a [GEC] change.--Acts 19 quiz
+int pagetic;// static int pagetic;
 
 // CODE --------------------------------------------------------------------
 
@@ -303,6 +312,9 @@ void D_ProcessEvents (void)
 	for (; eventtail != eventhead ; eventtail = (eventtail+1)&(MAXEVENTS-1))
 	{
 		ev = &events[eventtail];
+
+		ResetCount = true;//[GEC]
+
 		if (ev->type == EV_None)
 			continue;
 		if (ev->type == EV_DeviceChange)
@@ -336,6 +348,7 @@ void D_PostEvent (const event_t *ev)
 	events[eventhead] = *ev;
 	if (ev->type == EV_Mouse && menuactive == MENU_Off && ConsoleState != c_down && ConsoleState != c_falling && !E_Responder(ev) && !paused)
 	{
+		ResetCount = true;//[GEC]
 		if (Button_Mlook.bDown || freelook)
 		{
 			int look = int(ev->y * m_pitch * mouse_sensitivity * 16.0);
@@ -792,6 +805,10 @@ void D_Display ()
 			wipe = screen->WipeStartScreen (wipetype);
 			break;
 
+		case GS_FORCEWIPENONE: //[GEC]
+			wipe = screen->WipeStartScreen (wipe_None);
+			break;
+
 		case GS_FORCEWIPEFADE:
 			wipe = screen->WipeStartScreen (wipe_Fade);
 			break;
@@ -803,6 +820,19 @@ void D_Display ()
 		case GS_FORCEWIPEMELT:
 			wipe = screen->WipeStartScreen (wipe_Melt);
 			break;
+
+		case GS_FORCEWIPEMELT64: //[GEC]
+			wipe = screen->WipeStartScreen (wipe_Melt64);
+			break;
+
+		case GS_FORCEWIPEFADESCREEN: //[GEC]
+			wipe = screen->WipeStartScreen (wipe_FadeScreen);
+			break;
+
+		case GS_FORCEWIPELOADINGSCREEN: //[GEC]
+			wipe = screen->WipeStartScreen (wipe_LoadingScreen);
+			break;
+
 		}
 		wipegamestate = gamestate;
 	}
@@ -917,10 +947,17 @@ void D_Display ()
 			break;
 
 		case GS_DEMOSCREEN:
-			screen->SetBlendingRect(0,0,0,0);
+			/*screen->SetBlendingRect(0,0,0,0);
 			hw2d = screen->Begin2D(false);
 			D_PageDrawer ();
+			CT_Drawer ();*/
+
+			screen->SetBlendingRect(0,0,0,0);
+			hw2d = screen->Begin2D(false);
+			if(DrawCustomPage){D_CustomPageDrawer();}//[GEC]
+			else{D_PageDrawer ();}
 			CT_Drawer ();
+			//if(Force_Abort){D_AbortDrawer();}//[GEC]
 			break;
 
 		default:
@@ -992,6 +1029,7 @@ void D_Display ()
 
 		do
 		{
+			WipeDone = false;//[GEC]
 			do
 			{
 				I_WaitVBL(2);
@@ -1005,6 +1043,7 @@ void D_Display ()
 			screen->Update ();		// page flip or blit buffer
 			NetUpdate ();			// [RH] not sure this is needed anymore
 		} while (!done);
+		WipeDone = true;//[GEC]
 		screen->WipeCleanup();
 		I_FreezeTime(false);
 		GSnd->SetSfxPaused(false, 1);
@@ -1353,6 +1392,12 @@ void D_DoAdvanceDemo (void)
 		return;
 	}
 
+	if(DrawCustomPage)//[GEC]
+	{
+		D_DoCustomAdvanceDemo();//[GEC]
+		return;//[GEC]
+	}
+
 	if (gameinfo.gametype == GAME_Strife)
 	{
 		D_DoStrifeAdvanceDemo ();
@@ -1429,10 +1474,33 @@ void D_DoAdvanceDemo (void)
 //
 //==========================================================================
 
-void D_StartTitle (void)
+void D_StartTitle (bool setpage)//[GEC] void D_StartTitle (void)
 {
 	gameaction = ga_nothing;
-	demosequence = -1;
+
+	if(RestarPage != -1 && setpage)//[GEC]
+		demosequence = RestarPage;//[GEC]
+	else//[GEC]
+		demosequence = -1;
+
+	D_AdvanceDemo ();
+}
+
+//==========================================================================
+//
+// D_19StartTitle// Acts 19 quiz
+//
+//==========================================================================
+
+void D_19StartTitle (bool setpage)
+{
+	gameaction = ga_nothing;
+
+	if(EndPage != -1 && setpage)//[GEC]
+		demosequence = EndPage;//[GEC]
+	else//[GEC]
+		demosequence = -1;
+
 	D_AdvanceDemo ();
 }
 
@@ -2163,16 +2231,34 @@ static void AddAutoloadFiles(const char *autoname)
 	{
 		if (DoomStartupInfo.LoadLights == 1 || (DoomStartupInfo.LoadLights != 0 && autoloadlights))
 		{
-			const char *lightswad = BaseFileSearch ("lights.pk3", NULL);
+			const char *lightswad = BaseFileSearch ("CQ3gldef.pk3", NULL);// Acts 19 quiz
 			if (lightswad)
 				D_AddFile (allwads, lightswad);
 		}
+#ifdef __unix__// Acts 19 quiz
+		const char *bmwad = BaseFileSearch("CQmpg.pk3", NULL);// Acts 19 quiz
+		if (bmwad)
+			D_AddFile(allwads, bmwad);
+		else// Acts 19 quiz
+		{
+			const char *smwad = BaseFileSearch("CQsmk.pk3", NULL);// Acts 19 quiz
+			if (smwad)
+				D_AddFile(allwads, smwad);
+		}
+#else
 		if (DoomStartupInfo.LoadBrightmaps == 1 || (DoomStartupInfo.LoadBrightmaps != 0 && autoloadbrightmaps))
 		{
-			const char *bmwad = BaseFileSearch ("brightmaps.pk3", NULL);
+			const char *bmwad = BaseFileSearch ("CQmpg.pk3", NULL);// Acts 19 quiz
 			if (bmwad)
 				D_AddFile (allwads, bmwad);
+			else// Acts 19 quiz
+			{
+				const char *smwad = BaseFileSearch("CQsmk.pk3", NULL);// Acts 19 quiz
+				if (smwad)
+					D_AddFile (allwads, smwad);
+			}
 		}
+#endif// Acts 19 quiz
 		if (DoomStartupInfo.LoadWidescreen == 1 || (DoomStartupInfo.LoadWidescreen != 0 && autoloadwidescreen))
 		{
 			const char *wswad = BaseFileSearch ("game_widescreen_gfx.pk3", NULL);
@@ -2532,6 +2618,7 @@ static int D_DoomMain_Internal (void)
 	FString basewad = wad;
 
 	FString optionalwad = BaseFileSearch(OPTIONALWAD, NULL, true);
+	FString helpwad = BaseFileSearch(HELPWAD, NULL, true);// Acts 19 quiz
 
 	iwad_man = new FIWadManager(basewad, optionalwad);
 
@@ -2565,7 +2652,7 @@ static int D_DoomMain_Internal (void)
 		{
 			iwad_man = new FIWadManager(basewad, optionalwad);
 		}
-		const FIWADInfo *iwad_info = iwad_man->FindIWAD(allwads, iwad, basewad, optionalwad);
+		const FIWADInfo *iwad_info = iwad_man->FindIWAD(allwads, iwad, basewad, optionalwad, helpwad);// Acts 19 quiz
 		if (!iwad_info) return 0;	// user exited the selection popup via cancel button.
 		gameinfo.gametype = iwad_info->gametype;
 		gameinfo.flags = iwad_info->flags;
@@ -2701,6 +2788,10 @@ static int D_DoomMain_Internal (void)
 		// [CW] Parse any TEAMINFO lumps.
 		if (!batchrun) Printf ("ParseTeamInfo: Load team definitions.\n");
 		TeamLibrary.ParseTeamInfo ();
+
+		// [GEC] Parse any PAGEDEFS lumps.
+		Printf("ParsePageDefs: Load page definitions.\n");//[GEC]
+		ParsePageDefs();//[GEC]
 
 		R_ParseTrnslate();
 		PClassActor::StaticInit ();
@@ -2896,6 +2987,10 @@ static int D_DoomMain_Internal (void)
 							if (demorecording)
 								G_BeginRecording(startmap);
 							G_InitNew(startmap, false);
+
+							if (gameinfo.mStartWipe != GS_DEMOSCREEN)//[GEC]
+								wipegamestate = gameinfo.mStartWipe;//[GEC]
+
 							if (StoredWarp.IsNotEmpty())
 							{
 								AddCommandString(StoredWarp);

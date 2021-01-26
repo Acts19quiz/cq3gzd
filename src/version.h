@@ -86,14 +86,15 @@ const char *GetVersionString();
 #define SAVEVER 4557
 
 // This is so that derivates can use the same savegame versions without worrying about engine compatibility
-#define GAMESIG "LZDOOM"
+#define GAMESIG "CQ3"// Acts 19 quiz (used in the start-up header)
 #define BASEWAD "lzdoom.pk3"
+#define HELPWAD "CQ3help.pk3"// Acts 19 quiz
 #define OPTIONALWAD "game_support.pk3"
 
 // More stuff that needs to be different for derivatives.
-#define GAMENAME "LZDoom"
+#define GAMENAME "Chex(TM) Quest 3"// Acts 19 quiz (used in the crash reporter and within the game configuration INI).
 #define WGAMENAME L"LZDoom"
-#define GAMENAMELOWERCASE "lzdoom"
+#define GAMENAMELOWERCASE "chex3gzd"// Acts 19 quiz (used for the file name of the game configuration INI)
 #define FORUM_URL "http://forum.zdoom.org/"
 #define BUGS_FORUM_URL	"http://forum.zdoom.org/viewforum.php?f=2"
 
