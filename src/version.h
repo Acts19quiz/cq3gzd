@@ -92,7 +92,7 @@ const char *GetVersionString();
 #define OPTIONALWAD "game_support.pk3"
 
 // More stuff that needs to be different for derivatives.
-#define GAMENAME "Chex(TM) Quest 3"// Acts 19 quiz (used in the crash reporter and within the game configuration INI).
+#define GAMENAME "Chex™ Quest 3"// Acts 19 quiz (used in the crash reporter and within the game configuration INI).
 #define WGAMENAME L"Chex™ Quest 3"
 #define GAMENAMELOWERCASE "chex3gzd"// Acts 19 quiz (used for the file name of the game configuration INI)
 #define FORUM_URL "http://forum.zdoom.org/"
