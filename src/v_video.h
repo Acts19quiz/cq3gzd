@@ -161,6 +161,11 @@ enum
 
 	DTA_FullscreenEx,
 	DTA_FullscreenScale,
+
+	DTA_ResWidthF,		// [GEC]
+	DTA_ResHeightF,		// [GEC]
+	DTA_GLCOLOR,		// [GEC] color
+	DTA_DrawFire,		// [GEC] draw fire
 };
 
 enum EMonospacing : int

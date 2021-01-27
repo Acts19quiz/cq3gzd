@@ -593,6 +593,7 @@ public:
 	int NumTextures () const { return (int)Textures.Size(); }
 
 	void UpdateAnimations (uint64_t mstime);
+	void ResetAnimations ();//[GEC]
 	int GuesstimateNumTextures ();
 
 	FSwitchDef *FindSwitch (FTextureID texture);

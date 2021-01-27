@@ -85,11 +85,22 @@ enum gamestate_t : int
 	GS_STARTUP,			// [RH] Console is fullscreen, and game is just starting
 	GS_TITLELEVEL,		// [RH] A combination of GS_LEVEL and GS_DEMOSCREEN
 
-	GS_FORCEWIPE = -1,
+	/*GS_FORCEWIPE = -1,
 	GS_FORCEWIPEFADE = -2,
 	GS_FORCEWIPEBURN = -3,
-	GS_FORCEWIPEMELT = -4
+	GS_FORCEWIPEMELT = -4*/
+	GS_FORCEWIPE = -1,
+	GS_FORCEWIPENONE = -2, // [GEC]
+	GS_FORCEWIPEFADE = -3,
+	GS_FORCEWIPEBURN = -4,
+	GS_FORCEWIPEMELT = -5,
+	GS_FORCEWIPEMELT64 = -6,
+	GS_FORCEWIPEFADESCREEN = -7,
+	GS_FORCEWIPELOADINGSCREEN = -8
 };
+
+//[GEC]
+extern	bool WipeDone;
 
 extern	gamestate_t 	gamestate;
 

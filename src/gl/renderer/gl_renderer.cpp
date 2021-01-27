@@ -432,3 +432,53 @@ unsigned char *FGLRenderer::GetTextureBuffer(FTexture *tex, int &w, int &h)
 	}
 	return NULL;
 }
+
+//==========================================================================
+//
+// Draws a fire texture
+//
+//==========================================================================
+
+//
+// R_SpreadFirePSX
+//
+
+void R_SpreadFirePSX()
+{
+};
+
+//
+// Fire_Out
+//
+
+void Fire_Out()
+{
+};
+
+//
+// R_FirePSX
+//
+
+void R_FirePSX()
+{
+};
+
+//
+// R_InitFirePSX
+//
+
+void FGLRenderer::R_InitFirePSX_()
+{
+};
+
+//
+// R_FirePSXTicker
+//
+
+void FGLRenderer::R_FirePSXTicker_(bool fireout)
+{
+};
+
+void FGLRenderer::DrawFireTexture(FTexture *img, DrawParms &parms)
+{
+};

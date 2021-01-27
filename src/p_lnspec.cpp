@@ -64,6 +64,8 @@
 #include "g_levellocals.h"
 #include "vm.h"
 #include "p_destructible.h"
+#include "d_main.h"// Acts 19 quiz
+#include "g_game.h"// Acts 19 quiz
 
 // Remaps EE sector change types to Generic_Floor values. According to the Eternity Wiki:
 /*
@@ -1190,6 +1192,12 @@ FUNC(LS_Teleport_EndGame)
 {
 	if (!backSide && CheckIfExitIsGood (it, NULL))
 	{
+		if (!netgame)// Acts 19 quiz
+		{
+			G_CheckDemoStatus();
+			D_19StartTitle(true);
+			return true;
+		}
 		G_ChangeLevel(NULL, 0, 0);
 		return true;
 	}

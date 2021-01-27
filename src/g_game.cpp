@@ -98,6 +98,11 @@
 #include "events.h"
 #include "d_main.h"
 
+#include "pagedefs.h"//[GEC]
+extern bool DrawCustomPage; //[GEC]
+extern int SkipPage; //[GEC]
+extern bool ForceSkipPage; //[GEC]
+extern bool NoMenu; //[GEC]
 
 static FRandom pr_dmspawn ("DMSpawn");
 static FRandom pr_pspawn ("PlayerSpawn");
@@ -156,6 +161,7 @@ CVAR(Int, nametagcolor, CR_GOLD, CVAR_ARCHIVE)
 gameaction_t	gameaction;
 gamestate_t 	gamestate = GS_STARTUP;
 FName			SelectedSlideshow;		// what to start when ga_slideshow
+bool WipeDone = false;//[GEC]
 
 int 			paused;
 bool			pauseext;
@@ -1077,6 +1083,9 @@ void G_Ticker ()
 			}
 			if (players[i].playerstate == PST_REBORN || players[i].playerstate == PST_ENTER)
 			{
+				if(gameinfo.mMapWipe != GS_DEMOSCREEN)//[GEC]
+				wipegamestate = gameinfo.mMapWipe;//[GEC]
+
 				G_DoReborn(i, false);
 			}
 		}
@@ -1264,7 +1273,9 @@ void G_Ticker ()
 		break;
 
 	case GS_DEMOSCREEN:
-		D_PageTicker ();
+		//D_PageTicker ();
+		if(DrawCustomPage){D_CustomPageTicker ();}//[GEC]
+		else{D_PageTicker ();}
 		break;
 
 	case GS_STARTUP:

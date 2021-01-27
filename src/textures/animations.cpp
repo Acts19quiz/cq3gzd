@@ -997,6 +997,21 @@ void FTextureManager::UpdateAnimations (uint64_t mstime)
 
 //==========================================================================
 //
+// FTextureManager :: ResetAnimations  //[GEC]
+//
+//==========================================================================
+
+void FTextureManager::ResetAnimations()
+{
+	for (unsigned int j = 0; j < mAnimations.Size(); ++j)
+	{
+		FAnimDef *anim = mAnimations[j];
+		anim->CurFrame = 0;
+	}
+}
+
+//==========================================================================
+//
 // operator<<
 //
 //==========================================================================

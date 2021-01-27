@@ -54,6 +54,7 @@ enum
 };
 
 #include "gametype.h"
+#include "doomdef.h"//[GEC]
 
 extern const char *GameNames[17];
 
@@ -207,6 +208,14 @@ struct gameinfo_t
 	double normsidemove[2];
 	int fullscreenautoaspect = 3;
 	bool nomergepickupmsg;
+	gamestate_t	mStartWipe; //[GEC]
+	gamestate_t	mMapWipe; //[GEC]
+	float scalefriction; //[GEC]
+	int playeranglemode; //[GEC]
+	int playerblendsystem; //[GEC]
+	FString mBackImage;//[GEC]
+	int  mBackResW;//[GEC]
+	int  mBackResH;//[GEC]
 
 	const char *GetFinalePage(unsigned int num) const;
 };

@@ -57,7 +57,8 @@ void D_Display ();
 void D_PageTicker (void);
 void D_PageDrawer (void);
 void D_AdvanceDemo (void);
-void D_StartTitle (void);
+void D_StartTitle (bool setpage = false);//[GEC] void D_StartTitle (void);
+void D_19StartTitle (bool setpage = false);// Acts 19 quiz
 bool D_AddFile (TArray<FString> &wadfiles, const char *file, bool check = true, int position = -1);
 
 
@@ -148,13 +149,13 @@ class FIWadManager
 	void ParseIWadInfo(const char *fn, const char *data, int datasize, FIWADInfo *result = nullptr);
 	int ScanIWAD (const char *iwad);
 	int CheckIWADInfo(const char *iwad);
-	int IdentifyVersion (TArray<FString> &wadfiles, const char *iwad, const char *zdoom_wad, const char *optional_wad);
+	int IdentifyVersion (TArray<FString> &wadfiles, const char *iwad, const char *zdoom_wad, const char *optional_wad, const char *help_wad);// Acts 19 quiz
 	void CollectSearchPaths();
 	void AddIWADCandidates(const char *dir);
 	void ValidateIWADs();
 public:
 	FIWadManager(const char *fn, const char *fnopt);
-	const FIWADInfo *FindIWAD(TArray<FString> &wadfiles, const char *iwad, const char *basewad, const char *optionalwad);
+	const FIWADInfo *FindIWAD(TArray<FString> &wadfiles, const char *iwad, const char *basewad, const char *optionalwad, const char *helpwad);// Acts 19 quiz
 	const FString *GetAutoname(unsigned int num) const
 	{
 		if (num < mIWadInfos.Size()) return &mIWadInfos[num].Autoname;

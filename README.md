@@ -1,31 +1,29 @@
-# Welcome to LZDoom!
+# Welcome to Chex 3 GZD!
 
-[![Build Status](https://ci.appveyor.com/api/projects/status/github/drfrag666/gzdoom?branch=g3.3mgw&svg=true)](https://ci.appveyor.com/project/drfrag666/gzdoom) [![Build Status](https://travis-ci.org/drfrag666/gzdoom.svg?branch=g3.3mgw)](https://travis-ci.org/drfrag666/gzdoom)
-
-## LZDoom is a fork of GZDoom 3.3 which keeps the old DDRAW and D3D backends and still supports GL2 for compatibility. Also runs on older non SSE2 cpus.
+## Chex 3 GZD is a fork of LZDoom which supports OpenGL 2 and Windows XP for compatibility. Also runs on older non SSE2 cpus.
 
 Copyright (c) 1998-2021 ZDoom + GZDoom teams, and contributors
 
 Doom Source (c) 1997 id Software, Raven Software, and contributors
 
+PAGEDEFS code imported from [GEC] Master Edition 1.9.1 by Erick194 and Gerardo194.
+
+LZDoom codebase by drfrag.
+
 Please see license files for individual contributor licenses
 
-Special thanks to Coraline of the EDGE team for allowing us to use her [README.md](https://github.com/3dfxdev/EDGE/blob/master/README.md) as a template for this one.
+Special thanks to Coraline of the EDGE team for allowing use of her [README.md](https://github.com/3dfxdev/EDGE/blob/master/README.md) as a template for this one.
 
 ### Licensed under the GPL v3
 ##### https://www.gnu.org/licenses/quick-guide-gplv3.en.html
 ---
 
-## How to build GZDoom
+## How to build Chex 3 GZD
 
-To build GZDoom, please see the [wiki](https://zdoom.org/wiki/) and see the "Programmer's Corner" on the bottom-right corner of the page to build for your platform.
+To build Chex 3 GZD, please visit the [ZDoom wiki](https://zdoom.org/wiki/) and see the "Programmer's Corner" on the bottom-right corner of the page to build for your platform. Bear in mind, 64-bit builds of Chex 3 GZD aren't currently supported.
 
-GZDoom repo: https://github.com/coelckers/gzdoom
+Chex 3 GZD repo: https://github.com/Acts19quiz/chex3gzd
 
-## Other forks/branches
+## Trademark information
 
- - legacy: Official GZDoom vintage build for GL 2 hardware.
- - gzdoom32: ZDoom32.
- - gzdoomle: ZDoom LE (Legacy Edition).
- 
-For more info see the old README.md: https://github.com/drfrag666/gzdoom/blob/gzdoom32/README.md
+Chex&#8482; and Chex Quest&#8482; are trademarks of General Mills, Inc. Chex Quest 3 (game data files, e.g. IPK3, PK3, WAD) cannot be bought or sold under any circumstances.

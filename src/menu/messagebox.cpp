@@ -149,7 +149,7 @@ void ActivateEndGameMenu()
 		{
 			if (demorecording)
 				G_CheckDemoStatus();
-			D_StartTitle();
+			D_StartTitle(true);//[GEC]
 		}
 	});
 
