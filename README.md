@@ -6,7 +6,7 @@ Copyright (c) 1998-2021 ZDoom + GZDoom teams, and contributors
 
 Doom Source (c) 1997 id Software, Raven Software, and contributors
 
-PAGEDEFS code imported from [GEC] Master Edition 1.9.1 by Erick194 and Gerardo194.
+PAGEDEFS code imported with permission from [GEC] Master Edition 1.9.1 by Erick194 and Gerardo194.
 
 LZDoom codebase by drfrag.
 
