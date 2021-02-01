@@ -533,17 +533,17 @@ void D_CustomPageDrawer ()//[GEC]
 			int light = clamp<int>((SetPage->Layers[i].Light + SetPage->Layers[i].NewLight),lightdest,lightsrc);
 
 			//Alpha
-			fixed_t alphasrc = SetPage->Layers[i].Alpha;
-			fixed_t alphadest = SetPage->Layers[i].AlphaDest;
+			double alphasrc = SetPage->Layers[i].Alpha;// Acts 19 quiz Changed from fixed_t to double for 64-bit support.
+			double alphadest = SetPage->Layers[i].AlphaDest;// Acts 19 quiz Changed fixed_t.
 
 			if (alphasrc < alphadest)
 			{
-				int temp = alphasrc;
+				double temp = alphasrc;
 				alphasrc = alphadest;
 				alphadest = temp;
 			}
 
-			fixed_t alpha = clamp<fixed_t>((SetPage->Layers[i].Alpha + SetPage->Layers[i].NewAlpha),alphadest,alphasrc);
+			double alpha = clamp<double>((SetPage->Layers[i].Alpha + SetPage->Layers[i].NewAlpha),alphadest,alphasrc);// Acts 19 quiz Changed from fixed_t.
 
 			if(!SetPage->Layers[i].DrawTex)
 			{

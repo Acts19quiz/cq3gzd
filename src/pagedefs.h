@@ -52,11 +52,11 @@ struct FPageDef
 		bool	CheckSkill;
 
 		//fixed_t ItemFlash;
-		fixed_t	Alpha;			// Alpha
-		fixed_t	NewAlpha;		// NewAlpha
-		fixed_t	AlphaDest;		// AlphaDest
-		fixed_t	AlphaSpeed;		// AlphaSpeed
-		fixed_t	AlphaCount;		// AlphaCount
+		double	Alpha;			// Alpha Acts 19 quiz Changed from fixed_t to double for 64-bit support.
+		double	NewAlpha;		// NewAlpha Acts 19 quiz Changed fixed_t.
+		double	AlphaDest;		// AlphaDest Acts 19 quiz Changed fixed_t.
+		double	AlphaSpeed;		// AlphaSpeed Acts 19 quiz Changed fixed_t.
+		double	AlphaCount;		// AlphaCount Acts 19 quiz Changed fixed_t.
 	} Layers[MAXPAGELAYER];
 
 	void SetDefaultPage()
