@@ -2230,23 +2230,13 @@ static void AddAutoloadFiles(const char *autoname)
 	// [SP] Dialog reaction - load lights.pk3 and brightmaps.pk3 based on user choices
 	if (!(gameinfo.flags & GI_SHAREWARE))
 	{
+#if defined _WIN32 || defined _WIN64// Acts 19 quiz
 		if (DoomStartupInfo.LoadLights == 1 || (DoomStartupInfo.LoadLights != 0 && autoloadlights))
 		{
 			const char *lightswad = BaseFileSearch ("CQ3gldef.pk3", NULL, true);// Acts 19 quiz
 			if (lightswad)
 				D_AddFile (allwads, lightswad);
 		}
-#ifdef __unix__// Acts 19 quiz
-		const char *bmwad = BaseFileSearch ("CQmpg.pk3", NULL, true);// Acts 19 quiz
-		if (bmwad)
-			D_AddFile(allwads, bmwad);
-		else// Acts 19 quiz
-		{
-			const char *smwad = BaseFileSearch ("CQsmk.pk3", NULL, true);// Acts 19 quiz
-			if (smwad)
-				D_AddFile(allwads, smwad);
-		}
-#else
 		if (DoomStartupInfo.LoadBrightmaps == 1 || (DoomStartupInfo.LoadBrightmaps != 0 && autoloadbrightmaps))
 		{
 			const char *bmwad = BaseFileSearch ("CQmpg.pk3", NULL, true);// Acts 19 quiz
@@ -2258,6 +2248,19 @@ static void AddAutoloadFiles(const char *autoname)
 				if (smwad)
 					D_AddFile (allwads, smwad);
 			}
+		}
+#else
+		const char *lightswad = BaseFileSearch ("CQ3gldef.pk3", NULL, true);// Acts 19 quiz
+		if (lightswad)
+			D_AddFile (allwads, lightswad);
+		const char *bmwad = BaseFileSearch ("CQmpg.pk3", NULL, true);// Acts 19 quiz
+		if (bmwad)
+			D_AddFile(allwads, bmwad);
+		else// Acts 19 quiz
+		{
+			const char *smwad = BaseFileSearch ("CQsmk.pk3", NULL, true);// Acts 19 quiz
+			if (smwad)
+				D_AddFile(allwads, smwad);
 		}
 #endif// Acts 19 quiz
 		if (DoomStartupInfo.LoadWidescreen == 1 || (DoomStartupInfo.LoadWidescreen != 0 && autoloadwidescreen))
