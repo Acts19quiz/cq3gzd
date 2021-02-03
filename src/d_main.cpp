@@ -2230,7 +2230,7 @@ static void AddAutoloadFiles(const char *autoname)
 	// [SP] Dialog reaction - load lights.pk3 and brightmaps.pk3 based on user choices
 	if (!(gameinfo.flags & GI_SHAREWARE))
 	{
-#if defined _WIN32 || defined _WIN64// Acts 19 quiz
+#ifdef _WIN32// Acts 19 quiz
 		if (DoomStartupInfo.LoadLights == 1 || (DoomStartupInfo.LoadLights != 0 && autoloadlights))
 		{
 			const char *lightswad = BaseFileSearch ("CQ3gldef.pk3", NULL, true);// Acts 19 quiz
