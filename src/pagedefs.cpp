@@ -538,7 +538,7 @@ void D_CustomPageDrawer ()//[GEC]
 
 			if (alphasrc < alphadest)
 			{
-				double temp = alphasrc;
+				double temp = alphasrc;// Acts 19 quiz Changed from int to double for 64-bit support.
 				alphasrc = alphadest;
 				alphadest = temp;
 			}
