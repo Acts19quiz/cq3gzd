@@ -2255,12 +2255,12 @@ static void AddAutoloadFiles(const char *autoname)
 			D_AddFile (allwads, lightswad);
 		const char *bmwad = BaseFileSearch ("CQmpg.pk3", NULL, true);// Acts 19 quiz
 		if (bmwad)
-			D_AddFile(allwads, bmwad);
+			D_AddFile (allwads, bmwad);
 		else// Acts 19 quiz
 		{
 			const char *smwad = BaseFileSearch ("CQsmk.pk3", NULL, true);// Acts 19 quiz
 			if (smwad)
-				D_AddFile(allwads, smwad);
+				D_AddFile (allwads, smwad);
 		}
 #endif// Acts 19 quiz
 		if (DoomStartupInfo.LoadWidescreen == 1 || (DoomStartupInfo.LoadWidescreen != 0 && autoloadwidescreen))

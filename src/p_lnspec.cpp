@@ -64,8 +64,6 @@
 #include "g_levellocals.h"
 #include "vm.h"
 #include "p_destructible.h"
-#include "d_main.h"// Acts 19 quiz
-#include "g_game.h"// Acts 19 quiz
 
 // Remaps EE sector change types to Generic_Floor values. According to the Eternity Wiki:
 /*
@@ -89,6 +87,8 @@ static const uint8_t ChangeMap[8] = { 0, 1, 5, 3, 7, 2, 6, 0 };
 #define BYTEANGLE(a)	((a) * (360./256.))
 #define CRUSH(a)		((a) > 0? (a) : -1)
 #define CHANGE(a)		(((a) >= 0 && (a)<=7)? ChangeMap[a]:0)
+
+bool endmovie {};// Acts 19 quiz
 
 static bool CRUSHTYPE(int a)
 {
@@ -1194,9 +1194,7 @@ FUNC(LS_Teleport_EndGame)
 	{
 		if (!netgame)// Acts 19 quiz
 		{
-			G_CheckDemoStatus();
-			D_19StartTitle(true);
-			return true;
+			endmovie = true;
 		}
 		G_ChangeLevel(NULL, 0, 0);
 		return true;

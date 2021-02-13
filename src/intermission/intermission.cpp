@@ -52,6 +52,7 @@
 #include "utf8.h"
 #include "templates.h"
 #include "s_music.h"
+#include "g_game.h"// Acts 19 quiz
 
 #define ScaleToFit43 3
 
@@ -69,6 +70,7 @@ IMPLEMENT_POINTERS_START(DIntermissionController)
 IMPLEMENT_POINTERS_END
 
 extern int		NoWipe;
+extern bool		endmovie;
 
 CVAR(Bool, nointerscrollabort, false, CVAR_ARCHIVE | CVAR_GLOBALCONFIG);
 CVAR(Bool, inter_subtitles, false, CVAR_ARCHIVE | CVAR_GLOBALCONFIG);
@@ -1010,26 +1012,35 @@ void DIntermissionController::OnDestroy ()
 
 void F_StartIntermission(FIntermissionDescriptor *desc, bool deleteme, uint8_t state)
 {
-	if (DIntermissionController::CurrentIntermission != NULL)
+	if (endmovie)// Acts 19 quiz
 	{
-		DIntermissionController::CurrentIntermission->Destroy();
+		endmovie = false;
+		G_CheckDemoStatus();
+		D_19StartTitle(true);
 	}
-	V_SetBlend (0,0,0,0);
-	S_StopAllChannels ();
-	gameaction = ga_nothing;
-	gamestate = GS_FINALE;
-	if (state == FSTATE_InLevel) wipegamestate = GS_FINALE;	// don't wipe when within a level.
-	viewactive = false;
-	automapactive = false;
-	DIntermissionController::CurrentIntermission = Create<DIntermissionController>(desc, deleteme, state);
-
-	// If the intermission finishes straight away then cancel the wipe.
-	if (!DIntermissionController::CurrentIntermission->NextPage())
+	else
 	{
-		wipegamestate = GS_FINALE;
-	}
+		if (DIntermissionController::CurrentIntermission != NULL)
+		{
+			DIntermissionController::CurrentIntermission->Destroy();
+		}
+		V_SetBlend(0, 0, 0, 0);
+		S_StopAllChannels();
+		gameaction = ga_nothing;
+		gamestate = GS_FINALE;
+		if (state == FSTATE_InLevel) wipegamestate = GS_FINALE;	// don't wipe when within a level.
+		viewactive = false;
+		automapactive = false;
+		DIntermissionController::CurrentIntermission = Create<DIntermissionController>(desc, deleteme, state);
 
-	GC::WriteBarrier(DIntermissionController::CurrentIntermission);
+		// If the intermission finishes straight away then cancel the wipe.
+		if (!DIntermissionController::CurrentIntermission->NextPage())
+		{
+			wipegamestate = GS_FINALE;
+		}
+
+		GC::WriteBarrier(DIntermissionController::CurrentIntermission);
+	}
 }
 
 
